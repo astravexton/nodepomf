@@ -29,6 +29,7 @@ passport.deserializeUser(function(obj, done) {
 
 var auth = false;
 if (config.GITHUB_CLIENT_ID && config.GITHUB_CLIENT_SECRET) {
+  console.log("GitHub Auth");
   auth = true;
   passport.use(new GithubStrategy({
       clientID: config.GITHUB_CLIENT_ID,
@@ -36,6 +37,7 @@ if (config.GITHUB_CLIENT_ID && config.GITHUB_CLIENT_SECRET) {
       callbackURL: config.URL + "/auth/github/callback"
     },
     function(accessToken, refreshToken, profile, done) {
+      console.log(accessToken, refreshToken, profile);
       utils.createOrGetUser(profile, function(profile) {
         done(null, profile);
       });
